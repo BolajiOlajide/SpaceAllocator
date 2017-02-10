@@ -43,8 +43,7 @@ class TestCreateRoom(unittest.TestCase):
 
 
 class TestAddPerson(unittest.TestCase):
-    
-   
+    pass  
 
 if __name__ == '__main__':
     unittest.main()
