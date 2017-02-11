@@ -1,9 +1,10 @@
 #!/usr/bin/env python
+
 """
 This Dojo Space Allocator program is used for allocating room spaces and office spaces in the DOjo.
 Usage:
     my_program create_room <room_type> <room_name>...
-    my_program serial <port> [--baud=<n>] [--timeout=<seconds>]
+    my_program add_person <person_fname> <person_lname> <FELLOW/STAFF> [<wants_accommodation>]
     my_program (-i | --interactive)
     my_program (-h | --help | --version)
 Options:
@@ -12,6 +13,7 @@ Options:
 """
 
 import sys
+import os
 import cmd
 from models.room import Room
 from docopt import docopt, DocoptExit
@@ -48,23 +50,41 @@ def docopt_cmd(func):
     fn.__dict__.update(func.__dict__)
     return fn
 
+def intro():
+        os.system("clear")
+        print('Welcome to the Dojo Space Allocator Program!')
+        print('Type help for a list of commands.')
+
 class Interactive(cmd.Cmd):
-    intro = 'Welcome to the Dojo Space Allocator Program!' \
-        + ' (type help for a list of commands.)'
-    prompt = '(TheDojo)> '
+    prompt = 'Dojo>> '
     file = None
 
     @docopt_cmd
     def do_create_room(self, arg):
         """Usage: create_room <room_type> <room_name>..."""
         Dojo().create_room(arg)
-        #print(arg['<room_name>'])
 
     @docopt_cmd
     def do_add_person(self,arg):
-        """Usage: add_person <person_fname> <person_lname> <FELLOW/STAFF> [wants_accommodation]"""
-        Dojo().add_person(arg)   
+        """Usage: add_person <person_fname> <person_lname> <FELLOW/STAFF> [<wants_accommodation>]"""
+        check = Dojo().add_person(arg)
+        if check == True:
+                Dojo().assign_room(arg)
+        else:
+            pass
 
+    @docopt_cmd
+    def do_print_allocations(self,arg):
+        """Usage: print_allocations [<-o=filename>] """
+        Dojo().print_allocations(arg)
+
+    @docopt_cmd
+    def do_print_room(self,arg):
+        """Usage: print_room <room_name>"""
+        Dojo().print_room(arg)
+
+
+    @docopt_cmd
     def do_db_init(self,arg):
         """Initialize the database for first time use. \
         (This should only be done once to avoid complications."""
@@ -72,13 +92,21 @@ class Interactive(cmd.Cmd):
 
     def do_quit(self, arg):
         """Quits out of Interactive Mode."""
+        os.system("clear")
         print('Good Bye!')
         exit()
 
 
-opt = docopt(__doc__, sys.argv[1:])
+if __name__ == "__main__":
+    try:
+        opt = docopt(__doc__, sys.argv[1:])
 
-if opt['--interactive']:
-    Interactive().cmdloop()
+        if opt['--interactive']:
+            os.system('clear')
+            intro()
+            Interactive().cmdloop()
 
-print(opt)
+        print(opt)
+    except KeyboardInterrupt:
+        os.system("clear")
+        print('Application Exiting')
