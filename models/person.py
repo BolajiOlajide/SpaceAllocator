@@ -7,10 +7,7 @@ class Person(object):
             self.name = (first_name + ' ' + last_name).upper()
             self.office_allocated = False
             self.office=''
-            self.living_space_allocated = False
-            self.living_space = ''
-            print(self.name)
-            print(self.office)
-            print(self.living_space_allocated)
+            self.livingspace_allocated = False
+            self.livingspace = ''
         else:
             raise Exception('Person Name must have maximum of 10 characters.')
