@@ -1,3 +1,8 @@
 virtual/
-data/db.py
+data/
 dojo.db
+mock/
+workfile.txt
+__pycache__/
+models/__pycache__/
+tests/__pycache__/
