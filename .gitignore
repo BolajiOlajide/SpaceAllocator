@@ -6,3 +6,4 @@ workfile.txt
 __pycache__/
 models/__pycache__/
 tests/__pycache__/
+*.pyc
