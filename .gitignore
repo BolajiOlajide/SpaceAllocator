@@ -1,9 +1,9 @@
-virtual/
-data/
-dojo.db
 mock/
-workfile.txt
 __pycache__/
-models/__pycache__/
-tests/__pycache__/
 *.pyc
+input.txt
+input2.txt
+models/db.py
+.DS_Store
+.coverage
+*.db
